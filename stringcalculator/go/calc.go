@@ -27,7 +27,9 @@ func hasCustomDelimiter(numbers string) bool {
 }
 
 func findDelimiters(numbers string) string {
-	return regexp.MustCompile("//(.*?)\n").FindStringSubmatch(numbers)[1]
+	delimiters := regexp.MustCompile("//(.*?)\n").FindStringSubmatch(numbers)[1]
+	delimiters = regexp.MustCompile("\\]|\\[").ReplaceAllString(delimiters, "")
+	return regexp.QuoteMeta(delimiters)
 }
 
 func removeFirstLine(numbers string, delimiters string) string {
