@@ -19,7 +19,6 @@ func Add(numbers string) int {
 		numbers = removeFirstLine(numbers, delimiters)
 	}
 	return sum(split(numbers, delimiters))
-
 }
 
 func hasCustomDelimiter(numbers string) bool {
@@ -27,9 +26,15 @@ func hasCustomDelimiter(numbers string) bool {
 }
 
 func findDelimiters(numbers string) string {
-	delimiters := regexp.MustCompile("//(.*?)\n").FindStringSubmatch(numbers)[1]
-	delimiters = regexp.MustCompile("\\]|\\[").ReplaceAllString(delimiters, "")
-	return regexp.QuoteMeta(delimiters)
+	delimitersDef := regexp.MustCompile("//(.*?)\n").FindStringSubmatch(numbers)[1]
+	delimiters := []string{}
+	for _, delimiter := range regexp.MustCompile("\\]|\\[").Split(delimitersDef, -1) {
+		if delimiter != "" {
+			delimiters = append(delimiters, regexp.QuoteMeta(delimiter))
+		}
+	}
+	delimitersRegex := strings.Join(delimiters, "|")
+	return delimitersRegex
 }
 
 func removeFirstLine(numbers string, delimiters string) string {

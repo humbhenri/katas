@@ -13,6 +13,7 @@ func Test(t *testing.T) {
 	AssertEqual(t, 30, Add("//;\n10;20"))
 	AssertEqual(t, 60, Add("//***\n10***20***30"))
 	AssertEqual(t, 70, Add("//[***]\n10***20***40"))
+	AssertEqual(t, 7, Add("//[*][%]\n1*2%4"))
 }
 
 func AssertEqual(t *testing.T, expected interface{}, actual interface{}) {
